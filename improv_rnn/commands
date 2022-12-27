@@ -1,0 +1,12 @@
+BUNDLE_PATH=/Users/Beardicion/Documents/magenta-demo/improv_rnn/chord_pitches_improv.mag
+CONFIG='chord_pitches_improv'
+OUTPUT_DIR=/Users/Beardicion/Documents/magenta-demo/improv_rnn/output
+
+improv_rnn_generate \
+--config=${CONFIG} \
+--bundle_file=${BUNDLE_PATH} \
+--output_dir=${OUTPUT_DIR} \
+--num_outputs=10 \
+--primer_melody="[60]" \
+--backing_chords="C G Am F C G Am F" \
+--render_chords

@@ -1,0 +1,61 @@
+## Twinkle Twinkle
+
+--primer_melody="[60, -2, 60, -2, 67, -2, 67, -2]"
+
+
+## Primer midi
+
+--primer_midi=/Users/Beardicion/Documents/magenta-demo/scale_c_major.mid
+
+
+## BUILDING A DATASET
+
+INPUT_DIRECTORY=/Users/Beardicion/Documents/magenta-demo/midis
+
+# TFRecord file that will contain NoteSequence protocol buffers.
+SEQUENCES_TFRECORD=/Users/Beardicion/Documents/magenta-demo/training/notesequences.tfrecord
+
+convert_dir_to_note_sequences \
+  --input_dir=$INPUT_DIRECTORY \
+  --output_file=$SEQUENCES_TFRECORD
+
+
+## TRAINING A MODEL
+
+## TRAINING AND EVAL
+improv_rnn_create_dataset \
+--config='chord_pitches_improv' \
+--input=/Users/Beardicion/Documents/magenta-demo/training/notesequences.tfrecord \
+--output_dir=/Users/Beardicion/Documents/magenta-demo/training \
+--eval_ratio=0.10
+
+
+## TRAINING
+
+melody_rnn_train \
+--config=attention_rnn \
+--run_dir=/Users/Beardicion/Documents/magenta-demo/training \
+--sequence_example_file=/Users/Beardicion/Documents/magenta-demo/training/training_lead_sheets.tfrecord \
+--hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+--num_training_steps=20000
+
+## TEST
+
+melody_rnn_train \
+--config=attention_rnn \
+--run_dir=/Users/Beardicion/Documents/magenta-demo/training \
+--sequence_example_file=/Users/Beardicion/Documents/magenta-demo/training/eval_lead_sheets.tfrecord \
+--hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+--num_training_steps=20000 \
+--eval
+
+
+### CREATE BUNDLE FILE MAG
+
+The bundle format is a convenient way of combining the model checkpoint, metagraph, and some metadata about the model into a single file.
+melody_rnn_generate \
+--config=attention_rnn \
+--run_dir=/tmp/melody_rnn/logdir/run1 \
+--hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+--bundle_file=/tmp/attention_rnn.mag \
+--save_generator_bundle

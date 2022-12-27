@@ -1,0 +1,45 @@
+#### BASIC RNN
+
+BUNDLE_PATH=/Users/Beardicion/Documents/magenta-demo/melody_rnn/basic/basic_rnn.mag
+CONFIG='basic_rnn'
+OUTPUT_DIR=/Users/Beardicion/Documents/magenta-demo/melody_rnn/basic/output
+
+melody_rnn_generate \
+--config=${CONFIG} \
+--bundle_file=${BUNDLE_PATH} \
+--output_dir=${OUTPUT_DIR} \
+--num_outputs=10 \
+--num_steps=128 \
+--primer_melody="[60]"
+
+--num_steps=512 \
+--primer_midi=/Users/Beardicion/Documents/magenta-demo/scale_c_major.mid
+
+#### LOOKBACK RNN
+
+BUNDLE_PATH=/Users/Beardicion/Documents/magenta-demo/melody_rnn/lookback/lookback_rnn.mag
+CONFIG='lookback_rnn'
+OUTPUT_DIR=/Users/Beardicion/Documents/magenta-demo/melody_rnn/lookback/output
+
+melody_rnn_generate \
+--config=${CONFIG} \
+--bundle_file=${BUNDLE_PATH} \
+--output_dir=${OUTPUT_DIR} \
+--num_outputs=10 \
+--num_steps=128 \
+--primer_melody="[60]"
+
+
+#### ATTENTION RNN
+
+BUNDLE_PATH=/Users/Beardicion/Documents/magenta-demo/melody_rnn/attention/attention_rnn.mag
+CONFIG='attention_rnn'
+OUTPUT_DIR=/Users/Beardicion/Documents/magenta-demo/melody_rnn/attention/output
+
+melody_rnn_generate \
+--config=${CONFIG} \
+--bundle_file=${BUNDLE_PATH} \
+--output_dir=${OUTPUT_DIR} \
+--num_outputs=10 \
+--num_steps=128 \
+--primer_melody="[60]"
